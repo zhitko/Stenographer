@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="icon64.png">image/stenographer64.png</file>
+        <file alias="icon80.png">image/stenographer80.png</file>
+        <file>image/close.png</file>
+        <file>image/play.png</file>
+        <file>image/rec.png</file>
+        <file>image/sent.png</file>
+        <file>image/button-red.png</file>
+        <file>image/button-.png</file>
+        <file>image/button-blue.png</file>
+        <file>image/button-green.png</file>
+        <file>image/button-purple.png</file>
+        <file>qml/Button.qml</file>
+        <file>main.qml</file>
+        <file>qml/Scrollable.qml</file>
+        <file>qml/ScrollBar.qml</file>
+    </qresource>
+</RCC>
