@@ -1,8 +1,3 @@
-# Add more folders to ship with the application, here
-#folder_01.source = qml/stenographer
-#folder_01.target = qml
-#DEPLOYMENTFOLDERS = folder_01
-
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
@@ -24,7 +19,7 @@ QML_IMPORT_PATH =
 # MOBILITY +=
 QT += multimedia
 QT += network
-
+QT += phonon
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 # CONFIG += qdeclarative-boostable
 
@@ -36,7 +31,9 @@ SOURCES += main.cpp \
     stenographer.cpp \
     wavpcmfile.cpp \
     recthread.cpp \
-    googlespeech.cpp
+    googlespeech.cpp \
+    audioinfo.cpp \
+    downloadandplay.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -47,14 +44,28 @@ HEADERS += \
     stenographer.h \
     wavpcmfile.h \
     recthread.h \
-    googlespeech.h
+    googlespeech.h \
+    audioinfo.h \
+    downloadandplay.h
 
-RESOURCES += \
-    res.qrc
+#RESOURCES += \
+#    res.qrc
 
 OTHER_FILES += \
     qml/stenographer/Button.qml \
-    main.qml \
     qml/Button.qml \
     qml/ScrollBar.qml \
-    qml/Scrollable.qml
+    qml/Scrollable.qml \
+    qml/Stenographer.qml \
+    qml/Log.qml \
+    qml/Window.qml \
+    qml/Tabs.qml \
+    qml/Meter.qml \
+    qml/main.qml
+
+#TRANSLATIONS += \
+#    tr/messages_ru.ts \
+#    tr/messages_eng.ts
+
+RESOURCES += \
+    res.qrc

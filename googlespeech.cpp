@@ -5,22 +5,23 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QProcess>
+#include <QRegExp>
 
 GoogleSpeech::GoogleSpeech(QObject *parent) :
     QObject(parent)
 {
 }
 
-void GoogleSpeech::sent(QFile * file)
+void GoogleSpeech::sent(QString file_name)
 {
     emit logging("<GoogleSpeech> Sent new file: ");
 
     QString cmd = "";
-    QString fileNameNew = file->fileName() + ".flac";
+    QString fileNameNew = file_name + ".flac";
     #ifdef Q_OS_LINUX
-        cmd = "flac -f -s ./Filename.wav -o ./Filename.wav.flac";
+        cmd = "flac -f -s " + file_name + " -o " + fileNameNew;
     #else //Q_OS_MSDOS
-        cmd = "flac.exe -f -s " + file->fileName() + " -o " + fileNameNew;
+        cmd = "flac.exe -f -s " + file_name + " -o " + fileNameNew;
     #endif
     emit logging("<GoogleSpeech> Exec: "+cmd);
 
@@ -35,8 +36,8 @@ void GoogleSpeech::sent(QFile * file)
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(finishedSlot(QNetworkReply*)));
 
-    QUrl url("http://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU");
-    //QUrl url("http://www.google.com/speech-api/v1/recognize?client=chromium&lang=ru-Ru&maxresults=10");
+    //QUrl url("http://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU");
+    QUrl url("http://www.google.com/speech-api/v1/recognize?client=chromium&lang=ru-Ru&maxresults=10");
 
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
@@ -71,7 +72,17 @@ void GoogleSpeech::finishedSlot(QNetworkReply * reply)
         QByteArray bytes = reply->readAll();  // bytes
         QString string(bytes); // string
         emit logging("<GoogleSpeech> Reply: " + string);
-        emit getText(string);
+
+        QString answer = "";
+        QRegExp ans("utterance\":\"(.*)\"");
+        ans.setMinimal(true);
+        int pos = 0;
+        while ((pos = ans.indexIn(string, pos)) != -1) {
+            answer = answer + "\n" + ans.cap(1);
+            pos += ans.matchedLength();
+        }
+
+        emit getText(answer);
     }
     // Some http error received
     else

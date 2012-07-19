@@ -13,7 +13,7 @@ class GoogleSpeech : public QObject
 public:
     explicit GoogleSpeech(QObject *parent = 0);
 
-    void sent(QFile *);
+    void sent(QString);
     
 signals:
     void getText(QString);
