@@ -24,6 +24,11 @@ public:
 
     void switchAutoMod(bool);
     void setOverK(double);
+    void setIT1(int);
+    void setITstep1(int);
+    void setIT2(int);
+    void setITstep2(int);
+    void setDelay(int);
     QList<QString> getDevices();
 
     void isNeedToSavaTmpFiles(bool);

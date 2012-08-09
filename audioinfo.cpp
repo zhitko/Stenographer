@@ -161,27 +161,42 @@ qint64 AudioInfo::writeData(const char *data, qint64 len)
     return len;
 }
 
+void AudioInfo::recalc()
+{
+    //    double firstPeriodSec = 0.008;
+    //    double firstPeriodStepSec = 0.004;
+    //    double secondPeriodSec = 0.4;
+    //    double secondPeriodStepSec = 0.016;
+        double freq = 16.0;        // kHz
+        double dataSize = 1280.0;  // Data per read/write action
+        this->tempMaxBuff = (double)kDelay*freq/dataSize;
+        double firstPeriodSec = (double)kIT1/1000;
+        double firstPeriodStepSec = (double)kITstep1/1000;
+        double secondPeriodSec = (double)kIT2/1000;
+        double secondPeriodStepSec = (double)kITstep2/1000;
+        this->firstPeriod = firstPeriodSec * m_format.frequency();          // for 16kHz is 128
+        this->firstPeriodStep = firstPeriodStepSec * m_format.frequency();  // for 16kHz is 64
+        this->secondPeriod = secondPeriodSec / firstPeriodStepSec;          // for 250Hz is 100
+        this->secondPeriodStep = secondPeriodStepSec / firstPeriodStepSec;  // for 250Hz is 2
+        QTextStream out(stdout);
+        out << "firstPeriod " << this->firstPeriod << "\n";
+        out << "firstPeriodStep " << this->firstPeriodStep << "\n";
+        out << "secondPeriod " << this->secondPeriod << "\n";
+        out << "secondPeriodStep " << this->secondPeriodStep << "\n";
+}
+
 void AudioInfo::setArgs()
 {
-    double firstPeriodSec = 0.008;
-    double firstPeriodStepSec = 0.004;
-    double secondPeriodSec = 0.4;
-    double secondPeriodStepSec = 0.016;
+    kIT1 = 8;
+    kITstep1 = 4;
+    kIT2 = 400;
+    kITstep2 = 160;
+    kDelay = 1000;
+    recalc();
     this->firstStepValues = new QVector<int>();
     this->firstStepValuesBuf = new QVector<int>();
     this->secondStepValues = new QVector<int>();
     this->bufferedValues = new QVector<int>();
-    this->firstPeriod = firstPeriodSec * m_format.frequency();          // for 16kHz is 128
-    this->firstPeriodStep = firstPeriodStepSec * m_format.frequency();  // for 16kHz is 64
-    this->secondPeriod = secondPeriodSec / firstPeriodStepSec;          // for 250Hz is 100
-    this->secondPeriodStep = secondPeriodStepSec / firstPeriodStepSec;  // for 250Hz is 2
-    QTextStream out(stdout);
-    out << firstPeriod << "\n";
-    out << firstPeriodStep << "\n";
-    out << secondPeriod << "\n";
-    out << secondPeriodStep << "\n";
-
-    this->tempMaxBuff = 10;
     this->tempBuff = new QQueue<QByteArray>();
 }
 

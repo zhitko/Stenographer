@@ -61,7 +61,8 @@ OTHER_FILES += \
     qml/Window.qml \
     qml/Tabs.qml \
     qml/Meter.qml \
-    qml/main.qml
+    qml/main.qml \
+    qml/Spin.qml
 
 #TRANSLATIONS += \
 #    tr/messages_ru.ts \

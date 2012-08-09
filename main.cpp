@@ -62,6 +62,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QObject::connect(rootObject, SIGNAL(switchAutoMod()), &st, SLOT(switchAutoMod()));
     QObject::connect(rootObject, SIGNAL(setOverK(QVariant)), &st, SLOT(setOverK(QVariant)));
+    QObject::connect(rootObject, SIGNAL(setIT1(QVariant)), &st, SLOT(setIT1(QVariant)));
+    QObject::connect(rootObject, SIGNAL(setITstep1(QVariant)), &st, SLOT(setITstep1(QVariant)));
+    QObject::connect(rootObject, SIGNAL(setIT2(QVariant)), &st, SLOT(setIT2(QVariant)));
+    QObject::connect(rootObject, SIGNAL(setITstep2(QVariant)), &st, SLOT(setITstep2(QVariant)));
+    QObject::connect(rootObject, SIGNAL(setDelay(QVariant)), &st, SLOT(setDelay(QVariant)));
 
     QObject::connect(&st, SIGNAL(setAudioDevices(QVariant)), rootObject, SLOT(setAudioDevices(QVariant)));
 

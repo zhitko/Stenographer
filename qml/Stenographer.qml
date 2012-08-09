@@ -22,6 +22,7 @@ Rectangle {
             id: display
             width: displayRec.width
             wrapMode: TextEdit.WordWrap
+            font.pixelSize: 16
         }
     }
 }

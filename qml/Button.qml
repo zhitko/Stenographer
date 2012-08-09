@@ -64,7 +64,8 @@ BorderImage {
     Text {
         id: buttonText
         anchors.centerIn: parent; anchors.verticalCenterOffset: -1
-        font.pixelSize: parent.width > parent.height ? parent.height * .5 : parent.width * .5
+        font.pixelSize: parent.width > parent.height ? parent.height * .55 : parent.width * .55
+        font.bold: true
         style: Text.Sunken; color: "white"; styleColor: "black"; smooth: true
     }
 

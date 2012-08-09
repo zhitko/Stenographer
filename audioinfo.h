@@ -27,6 +27,12 @@ public:
     void isNeedSaveTmpFiles(bool val){ m_isNeedSaveTmpFiles=val; }
     void switchAutoMod(bool val){ m_isAuto = val; }
     void setOverK(double val){ kOverValue = val;}
+    void recalc();
+    void setIT1(int val){ kIT1 = val; recalc();}
+    void setITstep1(int val){ kITstep1 = val; recalc();}
+    void setIT2(int val){ kIT2 = val; recalc();}
+    void setITstep2(int val){ kITstep2 = val; recalc();}
+    void setDelay(int val){ kDelay = val; recalc();}
 
     int calculateNoiseLevel();
 
@@ -41,6 +47,7 @@ private:
     int criticalValue;
     double kOverValue;
     int counter1, counter2;
+    int kIT1, kITstep1, kIT2, kITstep2, kDelay;
     int firstPeriod, secondPeriod;
     int firstPeriodStep, secondPeriodStep;
     QVector<int> * firstStepValues;

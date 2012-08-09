@@ -152,3 +152,30 @@ void RecThread::setOverK(double val)
     out << val << "\n";
     this->m_audioInfo->setOverK(val);
 }
+
+
+void RecThread::setIT1(int val){
+    QTextStream out(stdout);
+    out << val << "\n";
+    this->m_audioInfo->setIT1(val);
+}
+void RecThread::setITstep1(int val){
+    QTextStream out(stdout);
+    out << val << "\n";
+    this->m_audioInfo->setITstep1(val);
+}
+void RecThread::setIT2(int val){
+    QTextStream out(stdout);
+    out << val << "\n";
+    this->m_audioInfo->setIT2(val);
+}
+void RecThread::setITstep2(int val){
+    QTextStream out(stdout);
+    out << val << "\n";
+    this->m_audioInfo->setITstep2(val);
+}
+void RecThread::setDelay(int val){
+    QTextStream out(stdout);
+    out << val << "\n";
+    this->m_audioInfo->setDelay(val);
+}

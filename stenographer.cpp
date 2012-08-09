@@ -172,3 +172,33 @@ void Stenographer::setOverK(QVariant val)
     emit logging(QString("<Stenographer> Factor is: ") + QString::number(val.toDouble()));
     this->recThread->setOverK(val.toDouble());
 }
+
+void Stenographer::setIT1(QVariant val)
+{
+    emit logging(QString("<Stenographer> First integration time is: ") + QString::number(val.toInt()));
+    this->recThread->setIT1(val.toInt());
+}
+
+void Stenographer::setITstep1(QVariant val)
+{
+    emit logging(QString("<Stenographer> First integration step is: ") + QString::number(val.toInt()));
+    this->recThread->setITstep1(val.toInt());
+}
+
+void Stenographer::setIT2(QVariant val)
+{
+    emit logging(QString("<Stenographer> Second integration time is: ") + QString::number(val.toInt()));
+    this->recThread->setIT2(val.toInt());
+}
+
+void Stenographer::setITstep2(QVariant val)
+{
+    emit logging(QString("<Stenographer> Second integration step is: ") + QString::number(val.toInt()));
+    this->recThread->setITstep2(val.toInt());
+}
+
+void Stenographer::setDelay(QVariant val)
+{
+    emit logging(QString("<Stenographer> Delay is: ") + QString::number(val.toInt()));
+    this->recThread->setDelay(val.toInt());
+}

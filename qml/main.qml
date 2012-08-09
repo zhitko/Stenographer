@@ -14,6 +14,11 @@ Rectangle{
     signal autoMod
     signal switchAutoMod
     signal setOverK (variant factor)
+    signal setIT1 (variant factor)
+    signal setITstep1 (variant factor)
+    signal setIT2 (variant factor)
+    signal setITstep2 (variant factor)
+    signal setDelay (variant factor)
     signal getOptions;
     signal changeAudioDevice( variant iDev )
     signal setSaveTempFiles(variant is)
@@ -30,11 +35,13 @@ Rectangle{
 
     function updateData(text) {
         if(showAllResults.is)
-            display.text = display.text + "\n" + text;
+            display.text = display.text + "\n" + text.split("\n").join("|");
         else
-            display.text = display.text + " " + text.split("\n")[1];
+            display.text = display.text + "\n" + text.split("\n")[1];
     }  // slot
-    function updateLog(text) { log.text = text + "\n" + log.text}  // slot
+    function updateLog(text) {
+        log.text = text + "\n" + log.text
+    }  // slot
 
     function setAudioDevices(list){
         devices.model = list;
@@ -232,6 +239,37 @@ Rectangle{
                     }
 
                 }
+//                Spin{
+//                    id: it1
+//                    factor: 8
+//                    onSet: { setIT1(it1.factor) }
+//                    message: "First integration time is: %1 ms"
+//                }
+//                Spin{
+//                    id: its1
+//                    factor: 4
+//                    onSet: { setITstep1(its1.factor) }
+//                    message: "First integration step is: %1 ms"
+//                }
+                Spin{
+                    id: it2
+                    factor: 400
+                    onSet: { setIT2(it2.factor) }
+                    message: "Integration time is: %1 ms"
+                }
+                Spin{
+                    id: its2
+                    factor: 160
+                    onSet: { setITstep2(its2.factor) }
+                    message: "Integration step is: %1 ms"
+                }
+                Spin{
+                    id: delay
+                    factor: 1000
+                    onSet: { setDelay(delay.factor) }
+                    message: "Delay (buffer size): %1 ms"
+                }
+
                 Window{
                     visible: parent.visible
                     height: devices.contentHeight+30;

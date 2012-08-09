@@ -44,6 +44,11 @@ public slots:
     void _testStopped(int);
     void switchAutoMod();
     void setOverK(QVariant);
+    void setIT1(QVariant);
+    void setITstep1(QVariant);
+    void setIT2(QVariant);
+    void setITstep2(QVariant);
+    void setDelay(QVariant);
     void changeAudioDevice(QVariant);
     void saveText(QVariant,QVariant);
     void setSaveTempFiles(QVariant);
