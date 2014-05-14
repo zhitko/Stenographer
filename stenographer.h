@@ -52,6 +52,7 @@ public slots:
     void changeAudioDevice(QVariant);
     void saveText(QVariant,QVariant);
     void setSaveTempFiles(QVariant);
+    void setNewLang(QVariant);
 
 private:
     QString lastWavFile;
@@ -64,6 +65,7 @@ private:
     bool m_autoMod;
     bool m_isActive;
     bool m_saveTmpFiles;
+    QString lang;
 //    QAudioInput * inputAudio;
     
 };

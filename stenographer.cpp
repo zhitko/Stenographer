@@ -18,6 +18,7 @@ Stenographer::Stenographer(QObject *parent) :
     m_autoMod = true;
     m_isActive = false;
     m_saveTmpFiles = false;
+    lang = "ru-ru";
 
     this->downloadAndPlay = new DownloadAndPlay();
 
@@ -113,7 +114,18 @@ void Stenographer::closeFile()
 void Stenographer::convertAndSent()
 {
     emit logging("<Stenographer> Begin convert");
-    googleSpeech->sent(lastWavFile);
+    QFile key_file("key");
+    QString key = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
+    if(key_file.open(QIODevice::ReadOnly)) {
+        QTextStream in(&key_file);
+        key = in.readLine();
+    }
+    googleSpeech->sent(lastWavFile, lang, key);
+}
+
+void Stenographer::setNewLang(QVariant lang)
+{
+    this->lang = lang.toString();
 }
 
 void Stenographer::setSaveTempFiles(QVariant _is)

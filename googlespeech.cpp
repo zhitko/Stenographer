@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 #include <QProcess>
 #include <QRegExp>
+#include <QDebug>
 
 GoogleSpeech::GoogleSpeech(QObject *parent) :
     QObject(parent)
@@ -14,39 +15,26 @@ GoogleSpeech::GoogleSpeech(QObject *parent) :
 
 void GoogleSpeech::sent(QString file_name)
 {
+    this->sent(file_name, "ru-ru", "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw");
+}
+
+void GoogleSpeech::sent(QString file_name, QString lang, QString key)
+{
     emit logging("<GoogleSpeech> Sent new file: ");
-
-    QString cmd = "";
-    QString fileNameNew = file_name + ".flac";
-    #ifdef Q_OS_LINUX
-        cmd = "flac -f -s " + file_name + " -o " + fileNameNew;
-    #else //Q_OS_MSDOS
-        cmd = "flac.exe -f -s " + file_name + " -o " + fileNameNew;
-    #endif
-    emit logging("<GoogleSpeech> Exec: "+cmd);
-
-//    #if defined(Q_WS_WIN)  //Если платформа Windows
-//    #elif defined(Q_WS_X11) // Если платформа, с использованием Х11(в том числе Linux)
-
-    QProcess *console=new QProcess();
-    console->start(cmd);
-    console->waitForReadyRead();
-    emit logging(console->readAllStandardOutput());
 
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(finishedSlot(QNetworkReply*)));
 
-    //QUrl url("http://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU");
-    QUrl url("http://www.google.com/speech-api/v1/recognize?client=chromium&lang=ru-Ru&maxresults=10");
+//    QUrl url("http://www.google.com/speech-api/v1/recognize?client=chromium&lang=ru-Ru&maxresults=10");
+    QString url_s = QString("https://www.google.com/speech-api/v2/recognize?output=json&lang=%1&key=%2").arg(lang).arg(key);
+    QUrl url(url_s);
 
     QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader,
-        "audio/x-flac; rate=16000");
-    m_file = new QFile(fileNameNew);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "audio/l16; rate=16000");
+    qDebug() << "file " << file_name;
+    m_file = new QFile(file_name);
     m_file->open(QFile::ReadOnly);
     nam->post(request, m_file);
-
-    //QNetworkReply* reply = nam->post(QNetworkRequest(url),file);
 }
 
 void GoogleSpeech::finishedSlot(QNetworkReply * reply)
@@ -74,7 +62,7 @@ void GoogleSpeech::finishedSlot(QNetworkReply * reply)
         emit logging("<GoogleSpeech> Reply: " + string);
 
         QString answer = "";
-        QRegExp ans("utterance\":\"(.*)\"");
+        QRegExp ans("transcript\":\"(.*)\"");
         ans.setMinimal(true);
         int pos = 0;
         while ((pos = ans.indexIn(string, pos)) != -1) {

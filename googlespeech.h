@@ -14,6 +14,7 @@ public:
     explicit GoogleSpeech(QObject *parent = 0);
 
     void sent(QString);
+    void sent(QString, QString, QString);
     
 signals:
     void getText(QString);

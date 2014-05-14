@@ -22,8 +22,10 @@ Rectangle{
     signal getOptions;
     signal changeAudioDevice( variant iDev )
     signal setSaveTempFiles(variant is)
+    signal setNewLang(variant lang)
 
     signal startTest
+
     function stopTest(value) {
         calibration.level = value;
         calibration.is = true;
@@ -158,6 +160,31 @@ Rectangle{
             Window {
                 visible: false
                 id: optionsWindow
+                Row{
+                    Text {
+                        font.family: "Helvetica"
+                        font.pointSize: 15
+                        text: qsTr("Language ")
+                    }
+                    TextInput {
+                        id: newLang
+                        width: 100
+                        text: "ru-ru"
+                        font.family: "Helvetica"
+                        font.pointSize: 15
+                        color: "blue"
+                        focus: true
+                    }
+                    Button {
+                        id: setLang
+                        width: 150
+                        color: 'green'
+                        operation: qsTr("Apply")
+                        onClicked: {
+                            setNewLang(newLang.text)
+                        }
+                    }
+                }
                 Button {
                     id: setAutoMod
                     property bool is: true

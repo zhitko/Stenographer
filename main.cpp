@@ -74,5 +74,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QObject::connect(rootObject, SIGNAL(saveText(QVariant, QVariant)), &st, SLOT(saveText(QVariant,QVariant)));
     QObject::connect(rootObject, SIGNAL(setSaveTempFiles(QVariant)), &st, SLOT(setSaveTempFiles(QVariant)));
 
+    QObject::connect(rootObject, SIGNAL(setNewLang(QVariant)), &st, SLOT(setNewLang(QVariant)));
+
     return app->exec();
 }
